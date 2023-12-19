@@ -1,35 +1,4 @@
-from loader import bot
-
-
-async def on_startup(dp):
-
-    import filters
-    filters.setup(dp)
-    import middlewares
-    middlewares.setup(dp)
-
-    from loader import db
-    from utils.db_api.db_gino import on_startup
-    print('Подключение к PostgreSQL')
-    await on_startup(dp)
-
-   # await db.gino.drop_all()
-
-    print('Создание таблицы')
-    await db.gino.create_all()
-    print('Готово')
-
-    from utils.notify_admins import on_startup_notify
-    await on_startup_notify(dp)
-
-    from utils.set_bot_commands import set_default_comands
-    await set_default_comands(dp)
-
-    print('Bot start')
-
-
-if __name__ == '__main__':
-
-    from aiogram import executor
-    from handlers import dp
-    executor.start_polling(dp, on_startup=on_startup)
+import g4f
+g4f.debug.logging = True  # Enable debug logging
+g4f.debug.check_version = False  # Disable automatic version checking
+print(g4f.Provider.Bing.params)  # Print supported args for Bin
